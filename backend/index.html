@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Генератор опросов | MVP</title>
+    <!-- style.css можно удалить по вашему указанию -->
+</head>
+<body>
+    <header class="app-header">
+        <div class="container">
+            <h1>Генератор персонализированных опросов</h1>
+            <p class="subtitle">Анализ клиентского пути и автоматическое формирование вопросов</p>
+        </div>
+    </header>
+
+    <main class="container" style="max-width:1100px; margin:0 auto; padding:1rem;">
+        <section class="card input-section" style="margin-bottom:1rem; padding:1rem; border:1px solid #eee;">
+            <h2>Ввод данных</h2>
+            <div class="form-group" style="margin-bottom:0.75rem;">
+                <label for="journey">Путь клиента (текст или JSON)</label><br>
+                <textarea id="journey" placeholder="Опишите шаги клиента или вставьте JSON..." rows="6" style="width:100%;"></textarea>
+            </div>
+            <div class="form-group" style="margin-bottom:0.75rem;">
+                <label for="hint">Подсказка для модели (опционально)</label><br>
+                <input type="text" id="hint" placeholder="Например: акцент на удобство навигации" style="width:100%;"/>
+            </div>
+            <button id="generateBtn" class="btn btn-primary" style="padding:0.6rem 1rem;">Сгенерировать опрос</button>
+        </section>
+
+        <div id="error" class="alert alert-error" style="display:none; color:#b00020; margin-bottom:0.5rem;"></div>
+        <div id="loading" class="loading-indicator" style="display:none; color:#0b5; margin-bottom:0.5rem;">Генерация запроса к модели...</div>
+
+        <section id="result" class="card result-section" style="display:block; padding:1rem; border:1px solid #eee; margin-bottom:1rem;">
+            <h2>Результат генерации</h2>
+            <div class="meta-badges" style="margin-bottom:0.5rem;">
+                <span class="badge"><strong>Категория:</strong> <span id="resCategory">—</span></span>
+                <span class="badge" style="margin-left:1rem;"><strong>Релевантность:</strong> <span id="resRelevance">—</span></span>
+            </div>
+
+            <div class="table-container" style="margin-bottom:0.5rem;">
+                <h3>Список вопросов</h3>
+                <table id="questionsTable" style="width:100%; border-collapse:collapse;">
+                    <thead>
+                        <tr>
+                            <th style="text-align:left; padding:4px; border-bottom:1px solid #ddd;">#</th>
+                            <th style="text-align:left; padding:4px; border-bottom:1px solid #ddd;">Вопрос</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div class="debug-section" style="margin-bottom:0.5rem;">
+                <h3>Использованный промпт (для отладки)</h3>
+                <pre id="promptPreview" class="code-block" style="background:#f7f7f7; padding:0.5rem;"></pre>
+            </div>
+
+            <div class="editor-section" style="margin-bottom:0.5rem;">
+                <h3>Редактирование результата (JSON)</h3>
+                <textarea id="jsonEditor" class="code-editor" rows="8" style="width:100%;"></textarea>
+                <div class="action-buttons" style="margin-top:0.5rem;">
+                    <button onclick="applyEdit()" class="btn btn-secondary" style="padding:0.4rem 0.8rem;">Применить правки</button>
+                    <button onclick="exportJSON()" class="btn btn-success" style="padding:0.4rem 0.8rem;">Экспорт JSON</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="card history-section" style="padding:1rem; border:1px solid #eee;">
+            <div class="section-header" style="display:flex; justify-content:space-between; align-items:center;">
+                <h2>История генераций</h2>
+                <button onclick="loadHistory()" class="btn btn-outline" style="padding:0.4rem 0.8rem;">Обновить список</button>
+            </div>
+            <div id="historyList" class="history-list" style="margin-top:0.75rem;">
+                <p class="empty-state" style="color:#666">История пуста. Сгенерируйте первый опрос.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer" style="text-align:center; padding:1rem; color:#666;">
+        <div class="container">
+            <p>OOO "let's play helldivers" &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
