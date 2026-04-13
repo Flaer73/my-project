@@ -558,6 +558,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadHistory();
     
     // Логирование для отладки
-    console.log('🚀 Survey Generator frontend loaded');
+    console.log('🚀 Stupnikov Alex frontend loaded');
     console.log(`📡 API Base: ${API_BASE || '(relative)'}`);
 });
